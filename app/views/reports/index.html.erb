@@ -1,1 +1,24 @@
-<h1>Hello, <%= @var %></h1>
+<h1>Report on sessions for period from <%= @start_date %> to <%= @finish_date %></h1>
+
+<h2>Total stats for period</h2>
+
+Number of users: <%= @total_users %>
+<br>
+Number of sessions: <%= @total_sessions %>
+<br>
+Number of unique browsers: <%= @unique_browsers_count %>
+
+
+<h2>Stats on users</h2>
+<% @users&.each do |user| %>
+  <h3><%= "#{user.first_name} #{user.last_name}" %></h3>
+  <ul>
+    <li>Total sessions: <%= user[:sessions_count] %></li>
+    <li>Total time: <%= user[:total_time] %></li>
+    <li>Longest session: <%= user[:longest_session] %></li>
+    <li>Have used IE: <%= user[:used_ie] %></li>
+    <li>Used only Chrome <%= user[:used_only_chrome] %>:</li>
+    <li>Dates of sessions: <%= user[:dates] %></li>
+  </ul>
+  <p>--------------------------------------------------------</p>
+<% end %>
