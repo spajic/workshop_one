@@ -2,7 +2,6 @@
 
 class ReportsController < ApplicationController
   def index
-    @var = 'Report!'
     @start_date = Date.parse params.require(:start_date)
     @finish_date = Date.parse params.require(:finish_date)
 
@@ -12,7 +11,7 @@ class ReportsController < ApplicationController
       finish_date: @finish_date,
     ).order(:user_id)
 
-    @unique_browsers_count = 777 # посчитать неэффективно
+    @unique_browsers_count = 777 # посчитать неэффективно?
 
     users =
       User
@@ -31,7 +30,7 @@ class ReportsController < ApplicationController
 
     @users = []
     users_array.each do |user|
-      users_sessions = select_sessions_of_user(user, sessions_array)
+      user_sessions = select_sessions_of_user(user, sessions_array)
       @users = @users + [stats_for_user(user, user_sessions)]
     end
   end
