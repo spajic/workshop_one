@@ -81,6 +81,4 @@ test:
 #
 production:
   <<: *default
-  database: workshop_one_production
-  username: workshop_one
-  password: <%= ENV["WORKSHOP_ONE_DATABASE_PASSWORD"] %>
+  database: workshop_one_development

@@ -2,7 +2,7 @@
 
 require 'uri'
 require 'net/http'
-require 'pry-byebug'
+# require 'pry-byebug'
 
 class Loop
   FINISH_DATE_FOR_ETALON = '02-08-2022'
