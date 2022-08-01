@@ -44,7 +44,7 @@ class GenerateData
       first_name: Faker::Name.first_name,
       last_name: Faker::Name.last_name,
       age: 18 + Random.rand(50),
-      email: Faker::Internet.email,
+      email: Faker::Internet.free_email,
     )
   end
 
