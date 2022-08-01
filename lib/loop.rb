@@ -27,7 +27,6 @@ class Loop
   # http 'localhost:3000/reports?start_date=2022-08-01&finish_date=2022-08-02' > tmp/etalon.html
   def check_correctness
     puts "⏳ Checking correctness..."
-    binding.pry
     result = get(FINISH_DATE_FOR_ETALON)
     etalon = File.read('tmp/etalon.html')
     if result == etalon
