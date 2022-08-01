@@ -66,6 +66,7 @@ group :development do
   gem "stackprof"
   gem "ruby-prof"
   gem "faker"
+  gem "pry"
 end
 
 group :test do

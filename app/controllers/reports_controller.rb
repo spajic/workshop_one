@@ -11,7 +11,6 @@ class ReportsController < ApplicationController
       finish_date: @finish_date,
     ).order(:user_id)
 
-    @unique_browsers_count = 777 # посчитать неэффективно?
 
     users =
       User
@@ -27,6 +26,8 @@ class ReportsController < ApplicationController
     users_array = users.to_a
     users_array = select_valid_users(users)
     sessions_array = sessions.to_a
+
+    @unique_browsers_count = unique_browsers_count(sessions_array)
 
     @users = []
     users_array.each do |user|
