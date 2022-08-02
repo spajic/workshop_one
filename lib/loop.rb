@@ -41,12 +41,12 @@ class Loop
     Net::HTTP.get_response(uri).body
   end
 
-  def calculate_metric
+  def calculate_metric(date: FINISH_DATE_FOR_METRIC_CALCULATION)
     puts "⏳ Calculating metric with #{REPEATS} measurements..."
     total_time = 0
     REPEATS.times do
       start = Time.now
-      get(FINISH_DATE_FOR_METRIC_CALCULATION)
+      get(date)
       total_time += Time.now - start
     end
     total_time / REPEATS
@@ -68,9 +68,9 @@ class Loop
     end
   end
 
-  def check_final_buget
+  def check_final_budget
     puts "⏳ Now testing for final budget..."
-    final_metric = get(FINAL_FINISH_DATE)
+    final_metric = calculate_metric(date: FINAL_FINISH_DATE)
     if final_metric < FINAL_BUDGET
       puts "🎉 Success! The final metric is #{final_metric} < #{FINAL_BUDGET}"
     else
