@@ -1,6 +1,42 @@
 # frozen_string_literal: true
 
 class ReportsController < ApplicationController
+  around_action :profile, only: :index
+
+  def profile(&block)
+    if params[:profile] == 'stackprof'
+      profile = StackProf.run(mode: :wall, raw: true, &block)
+      File.write('tmp/stackprof.json', JSON.generate(profile))
+    elsif params[:profile] == 'rubyprof'
+      RubyProf.measure_mode = RubyProf::WALL_TIME
+      RubyProf.start
+      yield
+      results = RubyProf.stop
+
+      File.open("tmp/rubyprof.json", 'w') do |f|
+        RubyProf::SpeedscopePrinter.new(results).print(f)
+      end
+    elsif params[:profile] == 'allocations'
+      RubyProf.measure_mode = RubyProf::ALLOCATIONS
+      RubyProf.start
+      yield
+      results = RubyProf.stop
+
+      printer = RubyProf::CallTreePrinter.new(results)
+      printer.print(path: 'tmp')
+    elsif params[:profile] == 'memory'
+      RubyProf.measure_mode = RubyProf::MEMORY
+      RubyProf.start
+      yield
+      results = RubyProf.stop
+
+      printer = RubyProf::CallTreePrinter.new(results)
+      printer.print(path: 'tmp')
+    else
+      yield
+    end
+  end
+
   def index
     @start_date = Date.parse params.require(:start_date)
     @finish_date = Date.parse params.require(:finish_date)
