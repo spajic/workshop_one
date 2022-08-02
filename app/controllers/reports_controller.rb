@@ -41,20 +41,15 @@ class ReportsController < ApplicationController
     @start_date = Date.parse params.require(:start_date)
     @finish_date = Date.parse params.require(:finish_date)
 
-    sessions = Session.where(
-      'date >= :start_date and date <= :finish_date', # тянуть все и фильтровать в Ruby?
+    scoped_sessions = Session.where(
+      'date >= :start_date and date <= :finish_date',
       start_date: @start_date,
-      finish_date: @finish_date,
-    ).order(:user_id)
+      finish_date: @finish_date
+    )
 
-
-    users =
-      User
-        .where(id: sessions.pluck(:user_id))
-        .order(:id)
-        .limit(30)
-
-    sessions = sessions.where(user_id: users.pluck(:id))
+    user_ids = scoped_sessions.pluck(:user_id).uniq
+    users = User.where(id: user_ids).order(:id).limit(30)
+    sessions = scoped_sessions.where(user: users)
 
     @total_users = users.count
     @total_sessions = sessions.count
