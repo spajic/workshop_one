@@ -13,4 +13,4 @@ So he asks us to be able to open this report:
 - for 30 first users at least
 - in < 5 seconds
 
-In our workshop we will tackle this requirements in a systematic approach.
+In our workshop we will tackle these requirements in a systematic approach.
