@@ -14,3 +14,8 @@ So he asks us to be able to open this report:
 - in < 5 seconds
 
 In our workshop we will tackle these requirements in a systematic approach.
+
+
+## Data
+
+To fill DB use generate_data.rb
